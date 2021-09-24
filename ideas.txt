@@ -1,0 +1,43 @@
+------------
+FaaS-idéer
+------------
+1. extract-transform-load, dvs hämta data, bearbeta det, spara det/visa det. Ett exempel kunde vara att ladda väderdata.
+
+2. stars, commits. etc on github, see https://www.openfaas.com/blog/serverless-single-page-app/
+
+------------------------
+Examples, tutorials, etc
+------------------------
+Det finns väldigt många bra exmepelkoder på https://github.com/openfaas/faas/tree/master/sample-functions och på https://github.com/orgs/faas-and-furious/repositories
+
+utvärdering av FaaS kontra ms, https://www.infoq.com/articles/serverless-microservices-flexibility/
+
+------
+gitops
+------
+https://www.gitops.tech/
+
+https://www.weave.works/technologies/gitops/
+
+Det krävs att k8n-klustret kan kommunicera med git-repot (pull) eller tvärtom (push). Det första fallet sköts med en *operator*. Kolla om det finns sådana som kan användas med kind. Kolla om flux kan vara något, se tex https://searchitoperations.techtarget.com/tutorial/Try-out-this-GitOps-tutorial-with-Flux-and-Kubernetes och https://fluxcd.io/docs/get-started/
+
+Flux is the GitOps operator for Kubernetes. It's an open source tool initially developed by Weaveworks and *later donated to the Cloud Native Computing Foundation*. AHA! Lovande!
+
+Använd flagger för deployment (progressive delivery), se https://docs.flagger.app/
+
+-----------------------------
+Exempelapplikation: Soundgood
+-----------------------------
+
+1. Skriv hello world i alla språ och ramverk.
+   Språk: Java, Typescript (eller JS), Python? Go?
+   Ramverk: kind, kubernetes, istio, knative, flux, flagger
+   
+   Båda FaaS och inte FaaS
+   
+2. Skapa hela infrstrukturen
+   Gitops, tester, loggning, datalagring, telemetry, kommunikation, transaktioner/saga?
+   
+3. Modellera Soundgood.
+
+4. Skriv appen
