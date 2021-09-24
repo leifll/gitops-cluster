@@ -4,7 +4,7 @@
 kind create cluster --config=kind-cluster.yaml
 
 # Install istio.
-istioctl install -f istio-config/istio-for-knative.yaml -y
+istioctl install -f istio-for-knative.yaml -y
 
 # Install flux to the cluster and specify the github repo that flux will monitor. Note
 # that the repository specified here contains only the flux system.
