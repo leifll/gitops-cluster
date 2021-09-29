@@ -1,0 +1,10 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- serving-crds-0.25.0.yaml
+- serving-core-0.25.0.yaml
+- enable-istio-sidecar.yaml
+- plaintext-communication-to-knative.yaml
+- net-istio-0.25.0.yaml
+- eventing-crds-0.25.0.yaml
+- eventing-core-0.25.0.yaml
