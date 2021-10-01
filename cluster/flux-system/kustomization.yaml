@@ -3,4 +3,4 @@ kind: Kustomization
 resources:
 - gotk-components.yaml
 - this-repo-source.yaml
-- this-repo-kustomization.yaml
+- cluster.yaml
