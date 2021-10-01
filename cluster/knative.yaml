@@ -5,6 +5,8 @@ metadata:
   namespace: flux-system
 spec:
   interval: 30s
+  dependsOn:
+    - name: knative-crds
   sourceRef:
     kind: GitRepository
     name: flux-system
