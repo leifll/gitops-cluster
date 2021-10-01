@@ -29,9 +29,10 @@ Använd flagger för deployment (progressive delivery), se https://docs.flagger.
 Exempelapplikation: Soundgood
 -----------------------------
 
-1. Skriv hello world i alla språ och ramverk.
+1. Skriv hello world i alla språk och ramverk.
    Språk: Java, Typescript (eller JS), Python? Go?
-   Ramverk: kind, kubernetes, istio, knative, flux, flagger
+   Ramverk: Spring
+   Cluster: kind, kubernetes, istio, knative, flux, flagger
    
    Båda FaaS och inte FaaS
    
@@ -41,3 +42,17 @@ Exempelapplikation: Soundgood
 3. Modellera Soundgood.
 
 4. Skriv appen
+
+-----------------------------
+Vad gör ett ramverk för k8s?? 
+-----------------------------
+* Spring Cloud Kubernetes är funktionalitet för att anropa kubernetes-clustrets API från Java-koden.
+* Spring Cloud är implementationer av typiska cloud-mönster, som gateway, service discovery, circuit breaker.
+* En app i Spring Cloud är alltså en helt vanlig app i springmvc eller web flux.
+* Spring cloud stream ska användas om kommunikationen sker med meddelanden istf http.
+
+* Vertx och Quarkus funkar på liknande sätt, förmodligen gör alla andra också det. På vilket
+  annat sätt skulle det kunna vara???
+
+* Spring Native är en produkt för att köra spring boot-appar native på graalvm. Spring native är
+  i beta 211001. 
