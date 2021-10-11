@@ -56,3 +56,33 @@ Vad gör ett ramverk för k8s??
 
 * Spring Native är en produkt för att köra spring boot-appar native på graalvm. Spring native är
   i beta 211001. 
+
+-------
+knative
+-------
+Knative är inte FaaS, eftersom den image som körs (kod + docker) ser ut exakt som den skulle gjort även om den körts direkt på k8s. Knative är istället till för att slippa hanteringen av pod/deployment/service, för att hantera autoscaling, för att hantera deployment (dela upp trafik på olika instanser) och för att hantera events (dvs koppla ihop noder). Notera att Knative alltså utför samma uppgift (dvs deployment) som flagger. Det är alltså inte meningsfullt att använda både knative och flagger, förmodligen är det inte ens möjligt.
+
+Tekton har utvecklats tillsammans med (eller för) knative, det hette från början knative build. Tekton används för att automatiskt/gitops bygga images av källkod. 
+
+------
+ArgoCD
+------
+Argo är ett alternativ till flux. Denna blogg illustrerar hur argo och tekton tillsammans kan automatisera (gitops) hela CD-pipen från kod till deployad app, https://medium.com/ibm-garage/fun-with-gitops-stitching-kubernetes-tekton-and-argo-ee348afd0b08.
+
+-----------
+FaaS på k8s
+-----------
+Den starkaste andidaten för att köra FaaS på ett k8s-kluster är nog OpenFaaS. Andra kandidater kunde vara OpenWhisk, men den verkar krånglig och fokuserad på IBM; Kubeless, men den verkar inte vara väldigt aktivt underhållen och hanterar inte Java; Fn, men den kör nog bara på docker, inte k8s (stämmer det)? AWS lambda är antagligen den klart dominerande plattformen för FaaS (211007).
+
+Se https://itnext.io/scaling-my-app-serverless-vs-kubernetes-cdb8adf446e1 för en översikt av k8s vs FaaS.
+
+--------------------
+arbetshypotes 211007
+--------------------
+k8s, istio, flux, flagger (kräver väl istio?), tekton. Överväg att byta flux mot argocd, men går det att använda flagger utan flux? 
+
+För att testa FaaS använd även OpenFaaS. 
+
+Strunta alltså i knative?!? Alternativt strunta i flagger. Flagger verkar bättre på just deploy, knative verkar inte kunna automatiskt köra canary release, skalningen måste göras manuellt. Knative kanske dock har annan funktionalitet som flagger saknar? Tänk också på hur krångligt och buggugt det var att installera knative. Går det att köra knative eventing utan knative serving? Flagger ersätter nämligen bara knative serving, det har inget med knative eventing att göra. 
+
+FaaS verkar väl egentligen väldigt smart? Det känns lite onödigt att behöva packa in ett helt os i varenda container. Är inte FaaS klart användbart även om noden inte är 'ephemeral'? 
