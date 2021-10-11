@@ -79,7 +79,7 @@ Se https://itnext.io/scaling-my-app-serverless-vs-kubernetes-cdb8adf446e1 för e
 --------------------
 arbetshypotes 211007
 --------------------
-k8s, istio, flux, flagger (kräver väl istio?), tekton. Överväg att byta flux mot argocd, men går det att använda flagger utan flux? 
+k8s, istio, flux, flagger (kräver väl istio?), tekton, kustomize. Överväg att byta flux mot argocd, men går det att använda flagger utan flux? 
 
 För att testa FaaS använd även OpenFaaS. 
 
