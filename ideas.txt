@@ -77,12 +77,12 @@ Den starkaste andidaten för att köra FaaS på ett k8s-kluster är nog OpenFaaS
 Se https://itnext.io/scaling-my-app-serverless-vs-kubernetes-cdb8adf446e1 för en översikt av k8s vs FaaS.
 
 --------------------
-arbetshypotes 211007
+arbetshypotes 211008
 --------------------
-k8s, istio, flux, flagger (kräver väl istio?), tekton, kustomize. Överväg att byta flux mot argocd, men går det att använda flagger utan flux? 
+k8s, istio, flux, flagger (över istio?), tekton, kustomize, knative-eventing?. Överväg att byta flux mot argocd, men går det att använda flagger utan flux? 
 
 För att testa FaaS använd även OpenFaaS. 
 
-Strunta alltså i knative?!? Alternativt strunta i flagger. Flagger verkar bättre på just deploy, knative verkar inte kunna automatiskt köra canary release, skalningen måste göras manuellt. Knative kanske dock har annan funktionalitet som flagger saknar? Tänk också på hur krångligt och buggugt det var att installera knative. Går det att köra knative eventing utan knative serving? Flagger ersätter nämligen bara knative serving, det har inget med knative eventing att göra. 
+Strunta alltså i knative?!? Alternativt strunta i flagger. Flagger verkar bättre på just deploy, knative verkar inte kunna automatiskt köra canary release, skalningen måste göras manuellt. Knative kanske dock har annan funktionalitet som flagger saknar? Går det att köra knative eventing utan knative serving? Flagger ersätter nämligen bara knative serving, det har inget med knative eventing att göra. 
 
 FaaS verkar väl egentligen väldigt smart? Det känns lite onödigt att behöva packa in ett helt os i varenda container. Är inte FaaS klart användbart även om noden inte är 'ephemeral'? 
