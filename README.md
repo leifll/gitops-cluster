@@ -1,6 +1,6 @@
-# Learning Microservices
+# Cluster using GitOps
 
-A first example of a cluster with microservices.
+A kubernetes cluster with flux and flagger for continous deployment.
 
 ## Cluster Start
 
