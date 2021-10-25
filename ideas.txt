@@ -31,12 +31,12 @@ Exempelapplikation: Soundgood
 
 1. Skriv hello world i alla språk och ramverk.
    Språk: Java, Typescript (eller JS), Python? Go?
-   Ramverk: Spring
+   Ramverk: Spring webflux, Nest
    Cluster: kind, kubernetes, istio, knative, flux, flagger
    
    Båda FaaS och inte FaaS
    
-2. Skapa hela infrstrukturen
+2. Skapa hela infrastrukturen
    Gitops, tester, loggning, datalagring, telemetry, kommunikation, transaktioner/saga?
    
 3. Modellera Soundgood.
@@ -62,7 +62,7 @@ knative
 -------
 Knative är inte FaaS, eftersom den image som körs (kod + docker) ser ut exakt som den skulle gjort även om den körts direkt på k8s. Knative är istället till för att slippa hanteringen av pod/deployment/service, för att hantera autoscaling, för att hantera deployment (dela upp trafik på olika instanser) och för att hantera events (dvs koppla ihop noder). Notera att Knative alltså utför samma uppgift (dvs deployment) som flagger. Det är alltså inte meningsfullt att använda både knative och flagger, förmodligen är det inte ens möjligt.
 
-Tekton har utvecklats tillsammans med (eller för) knative, det hette från början knative build. Tekton används för att automatiskt/gitops bygga images av källkod. 
+Tekton har utvecklats tillsammans med (eller för) knative, det hette från början knative build. Tekton är en CI, alltså ett alternativ till github actions.
 
 ------
 ArgoCD
@@ -77,12 +77,18 @@ Den starkaste andidaten för att köra FaaS på ett k8s-kluster är nog OpenFaaS
 Se https://itnext.io/scaling-my-app-serverless-vs-kubernetes-cdb8adf446e1 för en översikt av k8s vs FaaS.
 
 --------------------
+Bygg från kod så här
+--------------------
+
+Bygg ny image från kod med github actions och gör så här för att deploya den med flux, https://fluxcd.io/docs/guides/image-update/. Denna sida visar hur en image byggs från kod med github actions, https://github.com/marketplace/actions/build-and-push-docker-images
+
+--------------------
 arbetshypotes 211008
 --------------------
-k8s, istio, flux, flagger (över istio?), tekton, kustomize, knative-eventing?. Överväg att byta flux mot argocd, men går det att använda flagger utan flux? 
+k8s, istio, flux, flagger (över istio?), git actions, kustomize, knative-eventing?. Överväg att byta flux mot argocd, men går det att använda flagger utan flux? 
 
 För att testa FaaS använd även OpenFaaS. 
 
-Strunta alltså i knative?!? Alternativt strunta i flagger. Flagger verkar bättre på just deploy, knative verkar inte kunna automatiskt köra canary release, skalningen måste göras manuellt. Knative kanske dock har annan funktionalitet som flagger saknar? Går det att köra knative eventing utan knative serving? Flagger ersätter nämligen bara knative serving, det har inget med knative eventing att göra. 
+Strunta alltså i knative?!? Alternativt strunta i flagger. Flagger verkar bättre på just deploy, knative verkar inte kunna automatiskt köra canary release, skalningen måste göras manuellt. Knative har dock annan funktionalitet som flagger saknar (se ovan). Går det att köra knative eventing utan knative serving? Flagger ersätter nämligen bara delar av knative serving, och har inget med knative eventing att göra. 
 
 FaaS verkar väl egentligen väldigt smart? Det känns lite onödigt att behöva packa in ett helt os i varenda container. Är inte FaaS klart användbart även om noden inte är 'ephemeral'? 
