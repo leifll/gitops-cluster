@@ -82,10 +82,14 @@ Bygg från kod så här
 
 Bygg ny image från kod med github actions och gör så här för att deploya den med flux, https://fluxcd.io/docs/guides/image-update/. Denna sida visar hur en image byggs från kod med github actions, https://github.com/marketplace/actions/build-and-push-docker-images
 
+En kandidat för image repository är github packages (bra att det är i github, kan det vara ett problem att max nedladdning är 1GB/månad?). En annan kandidat är canister, bra att inte ha allt i github? Finns risk för lock-in då? Oavsett vilken finns bra dock för workflow på https://docs.github.com/en/actions/publishing-packages/publishing-docker-images#publishing-images-to-github-packages
+
+Går det att köra med OCI-image istf docker? Är det bra? Github packages verkar kunna det, men inte canister. Nej, det är inte värt besväret nu. För det första är skillnaden väldigt liten mellan OCI och docker images, för det andra är docker med och driver OCI, det kommer förmodligen vara lätt att byta när det blir aktuellt. Dessutom verkar det inte gå att köra OCI rätt upp och ner i k8s, det behövs nog något i stil med CRI-O. Det är förmodligen ännu mer komplicerat att köra OCI i ett kind-kluster.
+
 --------------------
 arbetshypotes 211008
 --------------------
-k8s, istio, flux, flagger (över istio?), git actions, kustomize, knative-eventing?. Överväg att byta flux mot argocd, men går det att använda flagger utan flux? 
+k8s, istio, flux, flagger (över istio?), github actions, github packages, kustomize, knative-eventing?. Överväg att byta flux mot argocd, men går det att använda flagger utan flux? 
 
 För att testa FaaS använd även OpenFaaS. 
 
