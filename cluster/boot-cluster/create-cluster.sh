@@ -11,3 +11,10 @@ flux bootstrap github \
  --path=./cluster \
  --personal \
  --private=false
+
+# Create secret for app repos.
+flux create secret git apps-auth \
+ --url=https://github.com/leifll \
+ --username=$GITHUB_USER \
+ --password=$GITHUB_TOKEN \
+ --namespace apps
