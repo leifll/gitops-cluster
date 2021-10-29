@@ -8,6 +8,6 @@ spec:
   sourceRef:
     kind: GitRepository
     name: webflux-hw-repo
-  path: ./deployment
+  path: ./deploy
   prune: true
   validation: client
