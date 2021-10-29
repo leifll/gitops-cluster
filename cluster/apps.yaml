@@ -12,6 +12,7 @@ metadata:
 spec:
   dependsOn:
     - name: knative-resources
+      namespace: flux-system
   interval: 30s
   sourceRef:
     kind: GitRepository
