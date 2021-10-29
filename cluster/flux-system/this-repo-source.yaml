@@ -9,6 +9,6 @@ spec:
     branch: main
   secretRef:
     name: flux-system
-  url: ssh://git@github.com/leifll/learn-ms
+  url: ssh://git@github.com/leifll/gitops-cluster
   ignore: |
     boot-cluster/  
