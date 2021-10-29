@@ -2,6 +2,7 @@ apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
 kind: Kustomization
 metadata:
   name: webflux-hw
+  namespace: apps
 spec:
   interval: 30s
   sourceRef:
