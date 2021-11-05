@@ -1,0 +1,9 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1beta1
+kind: ImageRepository
+metadata:
+  name: webflux-hw-image
+  namespace: apps
+spec:
+  interval: 30s
+  image: ghcr.io/leifll/webflux-hw
