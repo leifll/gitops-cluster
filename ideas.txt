@@ -93,7 +93,7 @@ k8s, istio, flux, flagger, github actions, github packages, kustomize, knative-e
 
 För att testa FaaS använd även OpenFaaS. 
 
-Strunta alltså i knative?!? Alternativt strunta i flagger. Flagger är bättre på just deploy, knative kan inte automatiskt köra canary release, skalningen måste göras manuellt. Knative har dock annan funktionalitet som flagger saknar (tex autoscaling och förenkling av pod/deployment/service/virtualservice). Går det att köra knative eventing utan knative serving? Flagger ersätter nämligen bara delar av knative serving, och har inget med knative eventing att göra. 
+Strunta alltså i knative?!? Alternativt strunta i flagger. Flagger är bättre på just deploy, knative kan inte automatiskt köra canary release, skalningen måste göras manuellt. Knative har dock annan funktionalitet som flagger saknar (tex autoscaling och förenkling av pod/deployment/service/virtualservice). Det är dock inte superkrångligt att skriva dessa manuellt, och lägga till en HPA. Går det att köra knative eventing utan knative serving? Flagger ersätter nämligen bara delar av knative serving, och har inget med knative eventing att göra. 
 
 Det går inte att kombinera Flagger och Knative eftersom Flagger inte hanterar knative-objekt. Det förs (211108) diskussioner om att integrera knative och flagger, men det verkar inte vara något konkret på gång den närmsta tiden.
 
