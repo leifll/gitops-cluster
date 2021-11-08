@@ -31,13 +31,13 @@ Exempelapplikation: Soundgood
 
 1. Skriv hello world i alla språk och ramverk.
    Språk: Java, Typescript (eller JS), Python? Go?
-   Ramverk: Spring webflux, Nest
-   Cluster: kind, kubernetes, istio, knative, flux, flagger
+   Ramverk: Spring webflux (KLART), Nest
+   Cluster: kind (KLART), kubernetes (KLART), istio (KLART), knative?, flux (KLART), flagger
    
    Båda FaaS och inte FaaS
    
 2. Skapa hela infrastrukturen
-   Gitops, tester, loggning, datalagring, telemetry, kommunikation, transaktioner/saga?
+   Gitops (KLART), tester, loggning, datalagring, telemetry, kommunikation, transaktioner/saga?
    
 3. Modellera Soundgood.
 
@@ -48,7 +48,7 @@ Vad gör ett ramverk för k8s??
 -----------------------------
 * Spring Cloud Kubernetes är funktionalitet för att anropa kubernetes-clustrets API från Java-koden.
 * Spring Cloud är implementationer av typiska cloud-mönster, som gateway, service discovery, circuit breaker.
-* En app i Spring Cloud är alltså en helt vanlig app i springmvc eller web flux.
+* En app i Spring Cloud är alltså en helt vanlig app i springmvc eller webflux.
 * Spring cloud stream ska användas om kommunikationen sker med meddelanden istf http.
 
 * Vertx och Quarkus funkar på liknande sätt, förmodligen gör alla andra också det. På vilket
@@ -60,7 +60,7 @@ Vad gör ett ramverk för k8s??
 -------
 knative
 -------
-Knative är inte FaaS, eftersom den image som körs (kod + docker) ser ut exakt som den skulle gjort även om den körts direkt på k8s. Knative är istället till för att slippa hanteringen av pod/deployment/service, för att hantera autoscaling, för att hantera deployment (dela upp trafik på olika instanser) och för att hantera events (dvs koppla ihop noder). Notera att Knative alltså utför samma uppgift (dvs deployment) som flagger. Det är alltså inte meningsfullt att använda både knative och flagger, förmodligen är det inte ens möjligt.
+Knative är inte FaaS, eftersom den image som körs (kod + docker) ser ut exakt som den skulle gjort även om den körts direkt på k8s. Knative är istället till för att slippa hanteringen av pod/deployment/service, för att hantera autoscaling, för att hantera deployment (dela upp trafik på olika instanser) och för att hantera events (dvs koppla ihop noder). Notera att Knative alltså utför (bla) samma uppgift (dvs deployment) som flagger. Det är inte möjligt att använda både knative och flagger, eftersom flagger inte hanterar knative-objekt.
 
 Tekton har utvecklats tillsammans med (eller för) knative, det hette från början knative build. Tekton är en CI, alltså ett alternativ till github actions.
 
@@ -82,17 +82,19 @@ Bygg från kod så här
 
 Bygg ny image från kod med github actions och gör så här för att deploya den med flux, https://fluxcd.io/docs/guides/image-update/. Denna sida visar hur en image byggs från kod med github actions, https://github.com/marketplace/actions/build-and-push-docker-images
 
-En kandidat för image repository är github packages (bra att det är i github, kan det vara ett problem att max nedladdning är 1GB/månad?). En annan kandidat är canister, bra att inte ha allt i github? Finns risk för lock-in då? Oavsett vilken finns bra dock för workflow på https://docs.github.com/en/actions/publishing-packages/publishing-docker-images#publishing-images-to-github-packages
+En kandidat för image repository är github packages (bra att det är i github, kan det vara ett problem att max nedladdning är 1GB/månad?). En annan kandidat är canister, bra att inte ha allt i github? Finns risk för lock-in då? Oavsett vilken finns bra doc för workflow på https://docs.github.com/en/actions/publishing-packages/publishing-docker-images#publishing-images-to-github-packages
 
 Går det att köra med OCI-image istf docker? Är det bra? Github packages verkar kunna det, men inte canister. Nej, det är inte värt besväret nu. För det första är skillnaden väldigt liten mellan OCI och docker images, för det andra är docker med och driver OCI, det kommer förmodligen vara lätt att byta när det blir aktuellt. Dessutom verkar det inte gå att köra OCI rätt upp och ner i k8s, det behövs nog något i stil med CRI-O. Det är förmodligen ännu mer komplicerat att köra OCI i ett kind-kluster.
 
 --------------------
 arbetshypotes 211008
 --------------------
-k8s, istio, flux, flagger (över istio?), github actions, github packages, kustomize, knative-eventing?. Överväg att byta flux mot argocd, men går det att använda flagger utan flux? 
+k8s, istio, flux, flagger, github actions, github packages, kustomize, knative-eventing?. 
 
 För att testa FaaS använd även OpenFaaS. 
 
-Strunta alltså i knative?!? Alternativt strunta i flagger. Flagger verkar bättre på just deploy, knative verkar inte kunna automatiskt köra canary release, skalningen måste göras manuellt. Knative har dock annan funktionalitet som flagger saknar (se ovan). Går det att köra knative eventing utan knative serving? Flagger ersätter nämligen bara delar av knative serving, och har inget med knative eventing att göra. 
+Strunta alltså i knative?!? Alternativt strunta i flagger. Flagger är bättre på just deploy, knative kan inte automatiskt köra canary release, skalningen måste göras manuellt. Knative har dock annan funktionalitet som flagger saknar (tex autoscaling och förenkling av pod/deployment/service/virtualservice). Går det att köra knative eventing utan knative serving? Flagger ersätter nämligen bara delar av knative serving, och har inget med knative eventing att göra. 
 
-FaaS verkar väl egentligen väldigt smart? Det känns lite onödigt att behöva packa in ett helt os i varenda container. Är inte FaaS klart användbart även om noden inte är 'ephemeral'? 
+Det går inte att kombinera Flagger och Knative eftersom Flagger inte hanterar knative-objekt. Det förs (211108) diskussioner om att integrera knative och flagger, men det verkar inte vara något konkret på gång den närmsta tiden.
+
+FaaS verkar väl egentligen väldigt smart? Det känns lite onödigt att behöva packa in ett helt os i varenda container. Är inte FaaS klart användbart även om noden inte är 'ephemeral'? Hanterar OpenFaaS autoscaling?
