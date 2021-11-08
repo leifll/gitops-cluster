@@ -10,7 +10,8 @@ flux bootstrap github \
  --branch=main \
  --path=./cluster \
  --personal \
- --private=false
+ --private=false \
+ --components-extra=image-reflector-controller,image-automation-controller
 
 # Create secret for app repos.
 flux create secret git apps-auth \
