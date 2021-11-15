@@ -1,4 +1,4 @@
-namespace: test
+namespace: flux-system
 resources:
   - service.yaml
   - deployment.yaml
