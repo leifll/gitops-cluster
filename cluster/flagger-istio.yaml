@@ -62,11 +62,18 @@ spec:
   prune: true
   validation: client
 ---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: flagger-test
+  labels:
+    istio-injection: enabled
+---
 apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
 kind: Kustomization
 metadata:
   name: flagger-loadtester
-  namespace: flux-system
+  namespace: flagger-test
 spec:
   dependsOn:
     - name: istio-system

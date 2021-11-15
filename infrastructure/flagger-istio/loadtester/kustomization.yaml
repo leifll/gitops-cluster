@@ -1,4 +1,4 @@
-namespace: flux-system
+namespace: flagger-test
 resources:
   - service.yaml
   - deployment.yaml

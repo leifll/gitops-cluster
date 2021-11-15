@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: flagger-loadtester
+  namespace: flagger-test
   labels:
     app: flagger-loadtester
 spec:
