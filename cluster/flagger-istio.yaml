@@ -81,6 +81,7 @@ spec:
   sourceRef:
     kind: GitRepository
     name: flux-system
+    namespace: flux-system
   path: ./infrastructure/flagger-istio/loadtester
   prune: true
   validation: client
