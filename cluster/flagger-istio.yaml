@@ -61,3 +61,19 @@ spec:
   path: ./infrastructure/flagger-istio/gateway
   prune: true
   validation: client
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+kind: Kustomization
+metadata:
+  name: flagger-loadtester
+  namespace: flux-system
+spec:
+  dependsOn:
+    - name: istio-system
+  interval: 10m0s
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+  path: ./infrastructure/flagger-istio/loadtester
+  prune: true
+  validation: client
