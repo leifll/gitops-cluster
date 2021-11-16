@@ -5,6 +5,7 @@ metadata:
   namespace: test
 spec:
   interval: 5m
+  targetNameSpace: test
   chart:
     spec:
       chart: loadtester
