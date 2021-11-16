@@ -11,7 +11,7 @@ spec:
       sourceRef:
         kind: HelmRepository
         name: loadtester-repo
-        namespace: flagger-test
+        namespace: test
       interval: 1m
   values:
     replicaCount: 1
