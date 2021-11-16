@@ -7,7 +7,7 @@ spec:
   interval: 5m
   chart:
     spec:
-      chart: flagger/loadtester
+      chart: flagger-loadtester
       sourceRef:
         kind: HelmRepository
         name: loadtester-repo
