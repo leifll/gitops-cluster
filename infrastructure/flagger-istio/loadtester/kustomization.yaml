@@ -1,0 +1,4 @@
+namespace: flagger-test
+resources:
+  - service.yaml
+  - deployment.yaml
