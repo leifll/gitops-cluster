@@ -65,7 +65,7 @@ spec:
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: flagger-test
+  name: test
   labels:
     istio-injection: enabled
 ---
@@ -73,7 +73,7 @@ apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
 kind: Kustomization
 metadata:
   name: flagger-loadtester
-  namespace: flagger-test
+  namespace: test
 spec:
   dependsOn:
     - name: istio-system
