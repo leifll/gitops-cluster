@@ -25,7 +25,7 @@ Exempelapplikation: Soundgood
    Både FaaS och inte FaaS
    
 2. Skapa hela infrastrukturen
-   Gitops (KLART), tester, loggning, datalagring, telemetry, kommunikation, transaktioner/saga?
+   Gitops (KLART), tester, loggning (KLART, finns i k8s själv), datalagring, telemetry (KLART, prometheus och grafana), kommunikation, devcluster, transaktioner/saga?
    
 3. Modellera Soundgood.
 
@@ -73,6 +73,33 @@ Bygg ny image från kod med github actions och gör så här för att deploya de
 En kandidat för image repository är github packages (bra att det är i github, kan det vara ett problem att max nedladdning är 1GB/månad?). En annan kandidat är canister, bra att inte ha allt i github? Finns risk för lock-in då? Oavsett vilken finns bra doc för workflow på https://docs.github.com/en/actions/publishing-packages/publishing-docker-images#publishing-images-to-github-packages
 
 Går det att köra med OCI-image istf docker? Är det bra? Github packages verkar kunna det, men inte canister. Nej, det är inte värt besväret nu. För det första är skillnaden väldigt liten mellan OCI och docker images, för det andra är docker med och driver OCI, det kommer förmodligen vara lätt att byta när det blir aktuellt. Dessutom verkar det inte gå att köra OCI rätt upp och ner i k8s, det behövs nog något i stil med CRI-O. Det är förmodligen ännu mer komplicerat att köra OCI i ett kind-kluster.
+
+-------------
+support tools
+-------------
+
+* Kubernetes dashboard, https://kubernetes.io/docs/tasks/access-application-cluster/web-ui-dashboard/
+    Använd inte detta, det har väldigt lika funktionalitet som kubectl.
+
+* kubernetes-api:et kan accessas utifrån med kommandot kubectl proxy.
+
+* Grafana, https://grafana.com/
+    Telemetry, verkar gå att göra mycket med grafana, men jag har inte utforskat det. Grafana är igång (ingick i flagger), för att komma åt det gör port forward till servicen flagger-grafana med kommandot 
+    kubectl -n istio-system port-forward svc/flagger-grafana 3000:80 Sedan finns det på url:en 
+    http://localhost:3000/d/flagger-istio/istio-canary
+
+* Prometheus, https://prometheus.io/
+    Samla data om exekveringen, dvs 'metrics'. Promethus har ett eget frågespråk som används för att söka metrics. Prometheus är igång (ingick i flagger) och används av grafana för att samla in datat som visas. Flagger kan även använda flera andra vekrtyg för att samla metrics. Läs mer om prometheus och övriga möjliga verktyg på https://docs.flagger.app/usage/monitoring och https://docs.flagger.app/tutorials/prometheus-operator och https://docs.flagger.app/faq#metrics Det går att skriva egna villkor för canary deploy med prometheus (eller de alternativa verktygens)frågespråk.
+
+* Loggar från en pod
+    Loggarna för flagger finns i flaggers deployment, de kan ses med 
+    kubectl -n istio-system logs deployment/flagger -f
+    På samma sätt kan utskrifter till stdout läsas i vilken pod som helst. Kubetail kan användas för att se utskrifter från flera pods samtidigt, se https://github.com/johanhaleby/kubetail.
+
+* Monitoring, logging and debugging kubernetes
+    Det står mycket om detta på https://kubernetes.io/docs/tasks/debug-application-cluster/ Det går till exempel att få en prompt till en pod med kommandot 
+    kubectl exec -n <namespacename> --stdin --tty <podname> -- /bin/bash
+    Det finns också mycket intressant läsning på https://logz.io/blog/a-practical-guide-to-kubernetes-logging/
 
 --------------------
 arbetshypotes 211008
