@@ -17,9 +17,9 @@ Exempelapplikation: Soundgood
 -----------------------------
 
 1. Skriv hello world i alla språk och ramverk.
-   Språk: Java, Typescript (eller JS), Python? Go?
-   Ramverk: Spring webflux (KLART), Nest
-   Cluster: kind (KLART), kubernetes (KLART), istio (KLART), knative?, flux (KLART), 
+   Språk: Java (KLART), Typescript (KLART), Python? Go?
+   Ramverk: Spring webflux (KLART), Nest (KLART)
+   Cluster: kind (KLART), kubernetes (KLART), istio (KLART), flux (KLART), 
             flagger (KLART)
    
    Både FaaS och inte FaaS
@@ -49,6 +49,8 @@ Vad gör ett ramverk för k8s??
 knative
 -------
 Knative är inte FaaS, eftersom den image som körs (kod + docker) ser ut exakt som den skulle gjort även om den körts direkt på k8s. Knative är istället till för att slippa hanteringen av pod/deployment/service, för att hantera autoscaling, för att hantera deployment (dela upp trafik på olika instanser) och för att hantera events (dvs koppla ihop noder). Notera att Knative alltså utför (bla) samma uppgift (dvs deployment) som flagger. Det är inte möjligt att använda både knative och flagger, eftersom flagger inte hanterar knative-objekt.
+
+Knative eventing är till för att hantera händelser, formatet är CloudEvents, som är en spec inom CNCF. En händelse i knative skickas alltid med http post. Knative events hanterar bara pub-sub, men en publisher kan kopplas till något extern system, tex kafka eller rabbitmq. I det fallet blir knative events alltså ett extra lager, som tar emot meddelandet från kafka/rabbitmq och publicerar ett event med meddelandet. Knative event kan inte skicka meddelanden till kafka/rabbitmq eller ngt annat. Slutsatsen är alltså att knative evnting inte är ett alternativ till en meddelandekö, utan ett kompliment. Knative eventing verkar gå att använda utan knative serving, men frågan är om det är smart. Ganska mycket av kn eventing relaterar på ett eller ett annat sätt till kn serving.
 
 Tekton har utvecklats tillsammans med (eller för) knative, det hette från början knative build. Tekton är en CI, alltså ett alternativ till github actions.
 
@@ -101,6 +103,24 @@ support tools
     kubectl exec -n <namespacename> --stdin --tty <podname> -- /bin/bash
     Det finns också mycket intressant läsning på https://logz.io/blog/a-practical-guide-to-kubernetes-logging/
 
+---------------------
+rabbitmq eller kafka?
+---------------------
+
+Det finns jämförelser på tex https://tanzu.vmware.com/developer/blog/understanding-the-differences-between-rabbitmq-vs-kafka/ och https://www.instaclustr.com/blog/rabbitmq-vs-kafka/
+
+En förenklad slutsats kan vara att "Kafka is ideal for big data use cases that require the best throughput, while RabbitMQ is ideal for low latency message delivery, guarantees on a per-message basis, and complex routing."
+
+En intressant skillnad är att kafka sparar alla meddelanden tills de explicit tas bort, och att meddelanden kan läsas oavsett vilken position de har i kön. Det underlättar event-driven applications, eftersom kafka själv kan anvädas som event store. Liknande funktionalitet är dock under utveckling även i rabbitmq (eller finns den redan?).
+
+Båda har gott om klienter och båda funkar med nest och spring.
+
+RabbitMQ funkar i kind enligt https://medium.com/nerd-for-tech/deploying-rabbitmq-on-kubernetes-using-rabbitmq-cluster-operator-ef99f7a4e417
+
+Kafka funkar i kind enligt https://giters.com/amuraru/k8s-kafka-the-hard-way#start-k8s-kind-cluster
+
+Båda är högst sannolikt helt OK, det bästa vore att använda båda två, för att lära sig båda. Börja med rabbitmq, helt enkelt för att tutorialen ovan verkar något enklare för den än för kafka.
+
 --------------------
 arbetshypotes 211008
 --------------------
@@ -108,7 +128,7 @@ k8s, istio, flux, flagger, github actions, github packages, kustomize, knative-e
 
 För att testa FaaS använd även OpenFaaS. 
 
-Strunta alltså i knative?!? Alternativt strunta i flagger. Flagger är bättre på just deploy, knative kan inte automatiskt köra canary release, skalningen måste göras manuellt. Knative kan dock ha annan funktionalitet som flagger saknar, kanske tex något enklare med autoscaling och förenkling av pod/deployment/service/virtualservice?. Även flagger ersätter dock service och virtualservice, och det är inte jättekrångligt att lägga till en HPA (se https://docs.flagger.app/tutorials/zero-downtime-deployments#autoscaling). Går det att köra knative eventing utan knative serving? Flagger ersätter nämligen bara delar av knative serving, och har inget med knative eventing att göra. 
+Strunta alltså i knative?!? Alternativt strunta i flagger. Flagger är bättre på just deploy, knative kan inte automatiskt köra canary release, skalningen måste göras manuellt. Knative kan dock ha annan funktionalitet som flagger saknar, kanske tex något enklare med autoscaling och förenkling av pod/deployment/service/virtualservice?. Även flagger ersätter dock service och virtualservice, och det är inte jättekrångligt att lägga till en HPA (se https://docs.flagger.app/tutorials/zero-downtime-deployments#autoscaling). Går det att köra knative eventing utan knative serving? Flagger ersätter nämligen bara delar av knative serving, och har inget med knative eventing att göra. Men kn eventing är inte jättenödvändigt, se resonemanget ovan under avsnittet om Knative. 
 
 Det går inte att kombinera Flagger och Knative eftersom Flagger inte hanterar knative-objekt. Det förs (211108) diskussioner om att integrera knative och flagger, men det verkar inte vara något konkret på gång den närmsta tiden.
 
