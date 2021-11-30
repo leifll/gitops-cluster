@@ -2,7 +2,7 @@
 apiVersion: source.toolkit.fluxcd.io/v1beta1
 kind: GitRepository
 metadata:
-  name: webflux-hw-repo
+  name: nesthw-repo
   namespace: apps
 spec:
   interval: 30s
@@ -10,4 +10,4 @@ spec:
     branch: main
   secretRef:
     name: apps-auth
-  url: https://github.com/leifll/webflux-hw
+  url: https://github.com/leifll/nesthw
