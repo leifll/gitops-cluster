@@ -1,0 +1,9 @@
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta1
+kind: ImageRepository
+metadata:
+  name: nesthw-image
+  namespace: apps
+spec:
+  interval: 30s
+  image: ghcr.io/leifll/nesthw

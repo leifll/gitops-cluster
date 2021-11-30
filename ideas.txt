@@ -25,7 +25,7 @@ Exempelapplikation: Soundgood
    Både FaaS och inte FaaS
    
 2. Skapa hela infrastrukturen
-   Gitops (KLART), tester, loggning (KLART, finns i k8s själv), datalagring, telemetry (KLART, prometheus och grafana), kommunikation, devcluster, transaktioner/saga?
+   Gitops (KLART, flux), tester, loggning (KLART, finns i k8s själv), datalagring, telemetry (KLART, prometheus och grafana), kommunikation, devcluster, transaktioner/saga?
    
 3. Modellera Soundgood.
 
