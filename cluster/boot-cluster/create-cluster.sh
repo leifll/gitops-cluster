@@ -19,3 +19,9 @@ flux create secret git apps-auth \
  --username=$GITHUB_USER \
  --password=$GITHUB_TOKEN \
  --namespace apps
+
+ # Create a secret for RabbitMQ admin.
+kubectl create secret generic rabbitmq-cluster-default-user \
+ -n rabbitmq \
+ --from-literal=default_user.conf=${RABBITMQ_ADMIN_USER}$'\n'${RABBITMQ_ADMIN_PASS}$'\n'
+ # see https://github.com/rabbitmq/cluster-operator/issues/840
