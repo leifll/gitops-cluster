@@ -29,6 +29,6 @@ spec:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
-  path: ./infrastructure/rabbitmq/cluster
+  path: ./infrastructure/rabbitmq/create-resources
   prune: true
   validation: client
