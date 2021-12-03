@@ -22,8 +22,11 @@ spec:
       memory: 2Gi
   rabbitmq:
           additionalConfig: |
+                  default_user = guest
+                  default_pass = guest
                   log.console.level = info
                   channel_max = 1700
                   default_user_tags.administrator = true
+
   service:
     type: LoadBalancer

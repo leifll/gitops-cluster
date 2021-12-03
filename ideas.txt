@@ -22,10 +22,10 @@ Exempelapplikation: Soundgood
    Cluster: kind (KLART), kubernetes (KLART), istio (KLART), flux (KLART), 
             flagger (KLART)
    
-   Både FaaS och inte FaaS
+   Både FaaS och inte FaaS (KLART)
    
 2. Skapa hela infrastrukturen
-   Gitops (KLART, flux), tester, loggning (KLART, finns i k8s själv), datalagring, telemetry (KLART, prometheus och grafana), kommunikation, devcluster, lösenordshantering, se https://kubernetes.io/docs/concepts/configuration/secret/, transaktioner/saga?
+   Gitops (KLART, flux), tester, loggning (KLART, finns i k8s själv), datalagring, telemetry (KLART, prometheus och grafana), kommunikation, devcluster, lösenordshantering, se https://kubernetes.io/docs/concepts/configuration/secret/ (plus att lösenord för RMQ står nu i yaml i klartext), transaktioner/saga?
    
 3. Modellera Soundgood.
 
