@@ -34,6 +34,11 @@ spec:
   service:
     type: LoadBalancer
 # ---
+
+# How to move the password 'guest' from this file to a hash in a config file is explained in https://github.com/rabbitmq/cluster-operator/tree/main/docs/examples/import-definitions. Note that according to rabbitmq documentation this should not be set with env vars in production, but instead with a config file. How to compute the hash is explained in https://www.rabbitmq.com/passwords.html#computing-password-hash.
+
 # Read about installing topology objects in https://rabbitmq.com/kubernetes/operator/using-topology-operator.html#queues-policies
-# Read about queues, consumers and publishers in https://rabbitmq.com/documentation.html
-# See examples in https://rabbitmq.com/tutorials/tutorial-one-java.html
+
+# Read about streams, queues, consumers and publishers in https://rabbitmq.com/documentation.html
+
+# See examples in https://rabbitmq.com/tutorials/tutorial-one-java.html and https://www.rabbitmq.com/kubernetes/operator/using-operator.html#examples

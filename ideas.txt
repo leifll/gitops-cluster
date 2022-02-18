@@ -111,7 +111,7 @@ Det finns jämförelser på tex https://tanzu.vmware.com/developer/blog/understa
 
 En förenklad slutsats kan vara att "Kafka is ideal for big data use cases that require the best throughput, while RabbitMQ is ideal for low latency message delivery, guarantees on a per-message basis, and complex routing."
 
-En intressant skillnad är att kafka sparar alla meddelanden tills de explicit tas bort, och att meddelanden kan läsas oavsett vilken position de har i kön. Det underlättar event-driven applications, eftersom kafka själv kan anvädas som event store. Liknande funktionalitet är dock under utveckling även i rabbitmq (eller finns den redan?).
+En intressant skillnad är att kafka sparar alla meddelanden tills de explicit tas bort, och att meddelanden kan läsas oavsett vilken position de har i kön (append-only log). Det underlättar event-driven applications, eftersom kafka själv kan anvädas som event store. Samma funktionalitet finns dock även i rabbitmq från version 3.9.
 
 Båda har gott om klienter och båda funkar med nest och spring.
 
